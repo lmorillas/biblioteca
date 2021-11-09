@@ -6,21 +6,7 @@
 <h1>Índice del catálogo</h1>
 
 <hr>
-<!-- formulario de búsqueda -->
-<form class="form-inline mt-2 mt-md-0" action="{% url 'buscalibros' %}"
-    method="get">
-    <input 
-        name="q" 
-        class="form-control mr-sm-2" 
-        type="text" 
-        placeholder="Introduce palabra título" 
-        aria-label="Search">
-</form>
 
-<!-- fin formuoario-->
-{%if noencontrado %} 
-<h3 class="error">Mensaje no encontrado</h3>
-{% endif %}
 <h2 class="mt-4">Últimos libros</h2>
 <ul>
     {% for libro in libros %}

@@ -15,18 +15,11 @@ def indice(request):
     '''
     datos = {'autor': 'Luis Miguel'}
     
-    
-    busqueda = request.GET.get('q')
-    if busqueda:
-        libros = Book.objects.filter(
-            title__icontains=busqueda)
-        datos['noencontrado'] = True
-    else:
-        libros = Book.objects.all()
-        
+    # últimos 5 libros del catálogo
+    libros = Book.objects.all().order_by('-id')[:5]
+
     datos['libros'] = libros
 
-    
     return render(request, 'index.html',
         context=datos)
 
@@ -55,10 +48,15 @@ class SearchResultsListView(ListView):
     model = Book
     context_object_name = 'libros'
     template_name = 'search_results.html'  # No usará la plantilla estándar del ListView
+    paginate_by = 25
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q')
+        return context
 
     def get_queryset(self): # new
         query = self.request.GET.get('q')
         if query:
             return Book.objects.filter(title__icontains=query)
-        else: 
-            return Book.objects.all()
+        return []  # cuando entramos a buscar o si no se introduce nada
