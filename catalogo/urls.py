@@ -9,5 +9,5 @@ urlpatterns = [
         name='listado_libros'),
     path('buscarlibros/', SearchResultsListView.as_view(),
         name="buscalibros" ),
-    path('autor/create', crear_autor, name='crear_autor')
+    path('autor/crear', crear_autor, name='crear_autor')
 ]

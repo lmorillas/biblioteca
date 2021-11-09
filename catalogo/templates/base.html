@@ -11,6 +11,13 @@
 </head>
 <body>
   <div class="container">
+  {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div class="alert {% if message.tags %} alert-{{ message.tags }}{% else %}alert-primary{% endif %}" role="alert">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
     <div class="row">
       <div class="col-sm-2">
       {% block sidebar %}

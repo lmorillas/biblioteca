@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from catalogo.models import Book
 from django.views import generic
 from django.views.generic import ListView
 from catalogo.forms import AuthorForm
+from django.contrib import messages
+
 
 # from django.http import HttpResponse
 
@@ -30,6 +32,14 @@ def todos_libros(request):
 
 # Creación de autor
 def crear_autor(request):
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'Autor creado.')
+            return redirect('/')
+    else:
+        form = AuthorForm()
     datos = {'form': AuthorForm()}
     return render(request, 'crear_autor.html', 
         context=datos)
