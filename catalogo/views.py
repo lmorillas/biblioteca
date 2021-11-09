@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from catalogo.models import Book
 from django.views import generic
-
+from django.views.generic import ListView
+from catalogo.forms import AuthorForm
 
 # from django.http import HttpResponse
 
@@ -34,6 +35,14 @@ def todos_libros(request):
     return render(request, 'todos_libros.html',
         context={'libros': libros})
 
+# Creación de autor
+def crear_autor(request):
+    datos = {'form': AuthorForm()}
+    return render(request, 'crear_autor.html', 
+        context=datos)
+
+
+
 class LibrosListView(generic.ListView):
     '''
     Vista genérica para nuestro listado de libros
@@ -41,3 +50,11 @@ class LibrosListView(generic.ListView):
     model = Book
     paginate_by = 15
 
+
+class SearchResultsListView(ListView):
+    model = Book
+    context_object_name = 'book_list'
+    template_names = ['libros/search_results.html']
+    def get_queryset(self): # new
+        query = self.request.GET.get('q')
+        return Book.objects.filter(title__icontains=query)
