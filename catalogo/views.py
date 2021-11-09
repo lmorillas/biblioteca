@@ -45,21 +45,20 @@ def crear_autor(request):
     return render(request, 'crear_autor.html', 
         context=datos)
 
-# Creación de autor con CreateVio. Añadimos SuccessMesaageMixin para mensaje de éxito.
-class CrearAutor(SuccessMessageMixin, generic.CreateView):
-    model = Author
-    fields = '__all__'
-    template_name = 'crear_autor.html'
-    success_url = '/'
-    success_message = "%(first_name)s %(last_name)s se ha creado correctamente"
-
-
 class LibrosListView(generic.ListView):
     '''
     Vista genérica para nuestro listado de libros
     '''
     model = Book
     paginate_by = 15
+
+class AutoresListView(generic.ListView):
+    '''
+    Vista genérica para nuestro listado de autores
+    '''
+    model = Author
+    paginate_by = 15
+    queryset = Author.objects.all().order_by('last_name', 'first_name')
 
 
 class SearchResultsListView(ListView):
@@ -78,3 +77,28 @@ class SearchResultsListView(ListView):
         if query:
             return Book.objects.filter(title__icontains=query)
         return []  # cuando entramos a buscar o si no se introduce nada
+
+# Creación de autor con CreateVio. Añadimos SuccessMesaageMixin para mensaje de éxito.
+class CrearAutor(SuccessMessageMixin, generic.CreateView):
+    model = Author
+    fields = '__all__'
+    template_name = 'crear_autor.html'
+    success_url = '/'
+    success_message = "%(first_name)s %(last_name)s se ha creado correctamente"
+
+
+# Creación de autor con CreateVio. Añadimos SuccessMesaageMixin para mensaje de éxito.
+class ModificarAutor(SuccessMessageMixin, generic.UpdateView):
+    model = Author
+    fields = '__all__'
+    template_name = 'modificar_autor.html'
+    success_url = '/'
+    success_message = "%(first_name)s %(last_name)s se ha modificado correctamente"
+
+
+# Creación de autor con CreateVio. Añadimos SuccessMesaageMixin para mensaje de éxito.
+class EliminarAutor(SuccessMessageMixin, generic.DeleteView):
+    model = Author
+    success_url = '/'
+    success_message = "%(first_name)s %(last_name)s se ha borrado correctamente"
+    template_name = 'autor_confirmar_borrado.html'
