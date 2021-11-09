@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from catalogo.models import Book
+from catalogo.models import Book, Author
 from django.views import generic
 from django.views.generic import ListView
 from catalogo.forms import AuthorForm
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 # from django.http import HttpResponse
@@ -44,6 +45,13 @@ def crear_autor(request):
     return render(request, 'crear_autor.html', 
         context=datos)
 
+# Creación de autor con CreateVio. Añadimos SuccessMesaageMixin para mensaje de éxito.
+class CrearAutor(SuccessMessageMixin, generic.CreateView):
+    model = Author
+    fields = '__all__'
+    template_name = 'crear_autor.html'
+    success_url = '/'
+    success_message = "%(first_name)s %(last_name)s se ha creado correctamente"
 
 
 class LibrosListView(generic.ListView):
