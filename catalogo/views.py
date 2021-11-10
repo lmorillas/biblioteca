@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from catalogo.models import Book, Author
 from django.views import generic
+from django.urls import resolve, reverse
 from django.views.generic import ListView
 from catalogo.forms import AuthorForm
 from django.contrib import messages
@@ -102,7 +103,7 @@ class ModificarAutor(SuccessMessageMixin, generic.UpdateView):
 # Creación de autor con CreateView. Añadimos SuccessMesaageMixin para mensaje de éxito.
 class EliminarAutor(generic.DeleteView):
     model = Author
-    success_url = '/catalogo/autores'
+    success_url = '/catalago/autores' #reverse('listado_autores')
     success_message = "El autor se ha borrado correctamente"
     template_name = 'autor_confirmar_borrado.html'
 
