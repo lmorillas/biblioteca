@@ -14,7 +14,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 def indice(request):
     '''
-    Página inicial de nuestra web
+    Página inicial de nuerear_autostra web
     '''
     datos = {'autor': 'Luis Miguel'}
     
@@ -22,7 +22,7 @@ def indice(request):
     libros = Book.objects.all().order_by('-id')[:5]
 
     datos['libros'] = libros
-
+     
     return render(request, 'index.html',
         context=datos)
 
@@ -37,7 +37,10 @@ def crear_autor(request):
         form = AuthorForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.SUCCESS, 'Autor creado.')
+            # Mensaje para informar éxito redirección
+            messages.add_message(request, 
+                messages.SUCCESS, 
+                'Autor creado.')
             return redirect('/')
     else:
         form = AuthorForm()
@@ -96,9 +99,14 @@ class ModificarAutor(SuccessMessageMixin, generic.UpdateView):
     success_message = "%(first_name)s %(last_name)s se ha modificado correctamente"
 
 
-# Creación de autor con CreateVio. Añadimos SuccessMesaageMixin para mensaje de éxito.
-class EliminarAutor(SuccessMessageMixin, generic.DeleteView):
+# Creación de autor con CreateView. Añadimos SuccessMesaageMixin para mensaje de éxito.
+class EliminarAutor(generic.DeleteView):
     model = Author
-    success_url = '/'
-    success_message = "%(first_name)s %(last_name)s se ha borrado correctamente"
+    success_url = '/catalogo/autores'
+    success_message = "El autor se ha borrado correctamente"
     template_name = 'autor_confirmar_borrado.html'
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(EliminarAutor, self).delete(
+            request, *args, **kwargs)
