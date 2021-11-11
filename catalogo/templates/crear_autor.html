@@ -1,7 +1,9 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
   <h1>Crear nuevo autor</h1>
+  <h3>Formularion normal</h3>
     <form action="" method="post">
     {% csrf_token %}
     <table>
@@ -9,4 +11,7 @@
     </table>
     <input type="submit" value="Crear">
   </form>
+
+  <h3 class="mt-5">Formulario con crispy</h3>
+{% crispy form %}
 {% endblock %}

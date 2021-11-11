@@ -81,9 +81,10 @@ class SearchResultsListView(ListView):
 # Creación de autor con CreateVio. Añadimos SuccessMesaageMixin para mensaje de éxito.
 class CrearAutor(SuccessMessageMixin, generic.CreateView):
     model = Author
-    fields = '__all__'
+    #fields = '__all__'
     template_name = 'crear_autor.html'
     success_url = '/'
+    form_class = AuthorForm
     success_message = "%(first_name)s %(last_name)s se ha creado correctamente"
 
 
