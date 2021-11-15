@@ -18,7 +18,11 @@ def indice(request):
     Página inicial de nuerear_autostra web
     '''
     datos = {'autor': 'Luis Miguel'}
-    
+    # ejemplo sesiones
+    visitas = request.session.get('visitas', 0)
+    request.session['visitas'] = visitas + 1
+    datos['visitas'] = visitas
+
     # últimos 5 libros del catálogo
     libros = Book.objects.all().order_by('-id')[:5]
 
