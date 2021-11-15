@@ -24,6 +24,9 @@ urlpatterns = [
     
     # Raíz de nuestra web
     path('', indice, name='indice'),
+    # para autenticación
+    path('accounts/', 
+        include('django.contrib.auth.urls')),
 
     path('__debug__/', include(debug_toolbar.urls)),
     

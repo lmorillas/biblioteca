@@ -6,7 +6,7 @@ from django.views.generic import ListView
 from catalogo.forms import AuthorForm
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-
+from django.contrib.auth.decorators import login_required
 
 # from django.http import HttpResponse
 
@@ -37,6 +37,8 @@ def todos_libros(request):
         context={'libros': libros})
 
 # Creación de autor
+# login obligatorio
+@login_required
 def crear_autor(request):
     if request.method == 'POST':
         form = AuthorForm(request.POST)
