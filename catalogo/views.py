@@ -7,6 +7,9 @@ from catalogo.forms import AuthorForm
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
+import os # para construir las rutas con os.path
+from django.conf import settings # para saber donde están los media
+
 
 # from django.http import HttpResponse
 
@@ -118,3 +121,24 @@ class EliminarAutor(generic.DeleteView):
         messages.success(self.request, self.success_message)
         return super(EliminarAutor, self).delete(
             request, *args, **kwargs)
+
+
+def subir_archivo(request):
+    # Si método es POST (nos están enviando algo)
+    if request.method == 'POST':
+        # ruta del archivo
+        nombre = request.FILES["archivo"].name
+        save_path = os.path.join(
+            settings.MEDIA_ROOT, nombre)
+
+        # crear archivo con fragmentos
+        with open(save_path, "wb") as output_file:
+            for chunk in request.FILES["archivo"].chunks():
+                output_file.write(chunk)
+
+        return render(request,'subir-archivo.html',
+            {'imagen':nombre})
+        
+    else:
+        return render(request, 
+            'subir-archivo.html')
