@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Catálogo{% endblock %}
+
+{% block content %}
+    <h1>Catálogo</h1>
+    
+    <ul>
+    {% for img in imagenes %}
+        <li> {{img}}</li>
+    {% endfor %}
+    </ul>
+
+{% endblock%}

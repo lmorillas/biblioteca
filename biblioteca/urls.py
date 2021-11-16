@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('catalogo/', include('catalogo.urls')),
-    
+    path('imagenes/', include('imagenes.urls')),
     # Raíz de nuestra web
     path('', indice, name='indice'),
     # para autenticación

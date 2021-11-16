@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'crispy_forms',
     'catalogo',
+    'imagenes.apps.ImagenesConfig'
 ]
 
 MIDDLEWARE = [
