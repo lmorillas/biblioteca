@@ -1,7 +1,8 @@
 from django.urls import include, path
 from catalogo.views import LibrosListView, SearchResultsListView, \
     crear_autor, CrearAutor, ModificarAutor, EliminarAutor, AutoresListView,\
-    subir_archivo
+    subir_archivo, mapa
+
 
 
 urlpatterns = [
@@ -16,5 +17,5 @@ urlpatterns = [
     path('autor/modificar/<int:pk>', ModificarAutor.as_view(), name='modificar_autor'),
     path('autor/eliminar/<int:pk>', EliminarAutor.as_view(), name='eliminar_autor'),
     path('subir-archivo', subir_archivo, name='subir-archivo'),
-
+    path('mapa', mapa, name='mapa'),
 ]

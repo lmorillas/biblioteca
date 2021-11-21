@@ -142,3 +142,9 @@ def subir_archivo(request):
     else:
         return render(request, 
             'subir-archivo.html')
+
+
+def mapa(request):
+    datos = {"coords":"41.6447588,-0.9231898"}
+    return render(request, 'mapa.html', 
+        context=datos)
